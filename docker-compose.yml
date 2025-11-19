@@ -1,0 +1,21 @@
+services:
+  momentum.api:
+    image: ${DOCKER_REGISTRY-}momentumapi
+    build:
+      context: .
+      dockerfile: src/Momentum.Api/Dockerfile
+    ports:
+      - 5000:8080
+      - 5001:8081
+
+  momentum.database:
+    image: postgres:latest
+    container_name: Momentum.Database
+    environment:
+      - POSTGRES_DB=momentum
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
